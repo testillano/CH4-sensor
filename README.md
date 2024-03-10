@@ -49,7 +49,7 @@ As you can see, we can get the load resistance (RL) just using the polymeter bet
 
 Below, we will describe the fundamentals that govern the program, although, as we mentioned, the source code is commented to facilitate its reading and understanding.
 
-From the voltage divider, we deduce the value of Rs (sensor resistance): `RS = V * RL / VS`, where RL is the load resistance, V is 5 volts, and VS is the measured voltage (Vout) of the sensor recorded on the analog pin.
+From the voltage divider, we deduce the value of RS (sensor resistance): `RS = V * RL / VS`, where RL is the load resistance, V is 5 volts, and VS is the measured voltage (Vout) of the sensor recorded on the analog pin.
 
 But we still need to complete the **calibration** phase. To do this, we look at the sensitivity curves in the specification sheet. From there, we obtain the parts per million (ppm) for a given RS/R0 ratio and a specific gas, where R0 is sensor resistance at 1000 ppm of CH4 in the clean air, a condition that we can reproduce. It should be noted that professionally, these types of sensors are calibrated in atmospheres with known ppm levels.
 
@@ -65,14 +65,12 @@ You could also run the program `./TwoSensors/TwoSensors.ino`. That one, duplicat
 
 ## Monitoring
 
-You may launch external monitor (better than Arduino's built-in plotter) which has been developed using python language: `./plotSerial.py`. A wrapper `./monitor.sh` script is provided to automate 2 pop-up windows:
+You may launch external monitor (better than Arduino's built-in plotter) which has been developed using python language: `./plotSerial.py`. A wrapper `./monitor.sh` script is provided to automate 2 pop-up windows (move and resize as you prefer):
 
-* Graph (move and resize as you prefer).
+* Graph: real-time accumulated values are represented.
 * Xterm to optionally reset the graph data (this may be useful when scaling is "broken" due to peak values of ppm measured).
 
-Then, run the script `./monitor.sh` in a console, and adjust and move to your liking the window with the real-time graph and the auxiliary reset `xterm` window.
-
-The `./TwoSensors` subproject, symlinks the monitoring script (`./monitor.sh`) and uses a variant version for `./plotSerial.py` where two y-axis values shall be represented.
+The `./TwoSensors` subproject, symlinks the monitoring script (`./monitor.sh`) and uses a variant version for `./plotSerial.py` where two y-axis values shall be represented. So, go into the `./TwoSensors` directory and execute the monitoring script.
 
 ## Debug
 
