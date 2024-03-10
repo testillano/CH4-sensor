@@ -14,8 +14,7 @@
 /////////////
 // Arduino //
 /////////////
-const bool EXTERNAL_PYTHON_MONITOR = true;  // false: used to initiate a sensor calibration process and heating (approximately 24 hrs).
-                                            // true: serial data shall transmit isolated ppm values to avoid 'plotSerial.py' corruption.
+const bool DEBUG = false; // debug output (calibration phase) is not compatible with external monitoring system ('./monitor.sh').
 
 const int CALIBRATION_PIN = 13; // Turn on during calibration
 const int MQ_PIN_1 = A0; // analog input for sensor inside the reactor
@@ -117,7 +116,7 @@ void setup() {
   Serial.begin(SERIAL_BAUD); // hay que ajustarlo en el monitor tambén, o se verá basura
   delay(1000);
 
-  if (!EXTERNAL_PYTHON_MONITOR) {
+  if (DEBUG) {
     Serial.println("\n===============================================================");
     Serial.println("METANE CONCENTRATION MEASUREMENT (CH4 ppm) BY MEAN MQ-4 SENSORS");
     Serial.println("Sensor 1: located inside the biomethane reactor");
@@ -132,13 +131,13 @@ void setup() {
 
   pinMode(CALIBRATION_PIN, OUTPUT);
   digitalWrite(CALIBRATION_PIN, HIGH); // light up
-  if (!EXTERNAL_PYTHON_MONITOR) Serial.print("Calibrating ... ");
+  if (DEBUG) Serial.print("Calibrating ... ");
   R0_1 = calibrate(MQ_PIN_1, RL_1);
   R0_2 = calibrate(MQ_PIN_2, RL_2);
-  if (!EXTERNAL_PYTHON_MONITOR) Serial.println("done !");
+  if (DEBUG) Serial.println("done !");
   digitalWrite(CALIBRATION_PIN, LOW); // light down
 
-  if (!EXTERNAL_PYTHON_MONITOR) {
+  if (DEBUG) {
     Serial.println("Start measuring ...");
     Serial.print("Calibrated R0_1 (K Ohms) = ");
     Serial.println(R0_1);

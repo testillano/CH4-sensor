@@ -57,7 +57,7 @@ try:
         ax.plot(xdata,ydata1, label='Sensor 1 (inside)', color='orange')
         ax.plot(xdata,ydata2, label='Sensor 2 (outside)', color='green')
 
-        register = "[{}] sensor 1 (orange): {} and sensor 2 (green): {} ppm CH4 (sample {}) | Plot size {}".format(datetime.datetime.now(), int(value1), int(value2), int(i), len(xdata))
+        register = "[{}] sensor 1/2: {}/{} ppm CH4 (sample {}) | Plot size {}".format(datetime.datetime.now(), int(value1), int(value2), int(i), len(xdata))
         logfile.write(register + "\n")
         print (register)
 

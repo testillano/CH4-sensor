@@ -1,8 +1,7 @@
 /////////////
 // Arduino //
 /////////////
-const bool EXTERNAL_PYTHON_MONITOR = false; // false: used to do initial sensor calibration process (~ 24 hrs running).
-                                            // true: used with './monitor.sh' (serial data shall transmit isolated ppm values to avoid 'plotSerial.py' corruption).
+const bool DEBUG = false; // debug output (calibration phase) is not compatible with external monitoring system ('./monitor.sh').
 
 const int CALIBRATION_PIN = 13; // Turn on during calibration
 const int MQ_PIN = A0; // analog input
@@ -101,7 +100,7 @@ void setup() {
   Serial.begin(SERIAL_BAUD); // hay que ajustarlo en el monitor tambén, o se verá basura
   delay(1000);
 
-  if (!EXTERNAL_PYTHON_MONITOR) {
+  if (DEBUG) {
     Serial.println("\n==============================================================");
     Serial.println("METANE CONCENTRATION MEASUREMENT (CH4 ppm) BY MEAN MQ-4 SENSOR");
     Serial.println("==============================================================\n");
@@ -112,12 +111,12 @@ void setup() {
 
   pinMode(CALIBRATION_PIN, OUTPUT);
   digitalWrite(CALIBRATION_PIN, HIGH); // light up
-  if (!EXTERNAL_PYTHON_MONITOR) Serial.print("Calibrating ... ");
+  if (DEBUG) Serial.print("Calibrating ... ");
   R0 = calibrate();
-  if (!EXTERNAL_PYTHON_MONITOR) Serial.println("done !");
+  if (DEBUG) Serial.println("done !");
   digitalWrite(CALIBRATION_PIN, LOW); // light down
 
-  if (!EXTERNAL_PYTHON_MONITOR) {
+  if (DEBUG) {
     Serial.println("Start measuring ...");
     Serial.print("Calibrated R0 (K Ohms) = ");
     Serial.println(R0);
